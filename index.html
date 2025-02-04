@@ -28,21 +28,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    button {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 3px;
       cursor: pointer;
-    }
-    button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
     }
     .selected {
       background-color: #d4edda;
+    }
+    .disabled {
+      opacity: 0.5;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -101,6 +94,23 @@
     // Seleccionar la lista
     const giftList = document.getElementById('gift-list');
 
+    // Cargar el estado guardado desde localStorage
+    const savedState = JSON.parse(localStorage.getItem('giftListState')) || {};
+
+    // Aplicar el estado guardado a los elementos de la lista
+    giftList.querySelectorAll('li').forEach((item) => {
+      const itemText = item.textContent.trim();
+      if (savedState[itemText]) {
+        item.setAttribute('data-selected', savedState[itemText].selected);
+        if (savedState[itemText].selected >= parseInt(item.getAttribute('data-max'))) {
+          item.classList.add('disabled');
+        }
+        if (savedState[itemText].selected > 0) {
+          item.classList.add('selected');
+        }
+      }
+    });
+
     // Función para manejar la selección de regalos
     giftList.addEventListener('click', (event) => {
       const item = event.target;
@@ -116,14 +126,21 @@
           item.setAttribute('data-selected', currentSelections);
           item.classList.add('selected');
 
+          // Guardar el estado en localStorage
+          const itemText = item.textContent.trim();
+          savedState[itemText] = { selected: currentSelections };
+          localStorage.setItem('giftListState', JSON.stringify(savedState));
+
           // Si se alcanza el límite, deshabilitar el elemento
           if (currentSelections === maxSelections) {
-            item.style.opacity = '0.5';
-            item.style.pointerEvents = 'none';
+            item.classList.add('disabled');
           }
         }
       }
     });
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>
