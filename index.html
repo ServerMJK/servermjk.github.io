@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Ideas de Regalos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background-color: #fff;
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .selected {
+      background-color: #d4edda;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lista de Ideas de Regalos</h1>
+  <ul id="gift-list">
+    <!-- Lista de regalos -->
+    <li data-max="1">Freidora de aire</li>
+    <li data-max="2">Juego de vajillas</li>
+    <li data-max="1">Licuadora</li>
+    <li data-max="1">Tostadora</li>
+    <li data-max="3">Juego de cubiertos</li>
+    <li data-max="2">Cuchillos</li>
+    <li data-max="3">Juego de sábanas</li>
+    <li data-max="2">Juego de colcha</li>
+    <li data-max="2">Juego de vasos</li>
+    <li data-max="2">Juego de copas</li>
+    <li data-max="2">Juego de tasas</li>
+    <li data-max="1">Greca</li>
+    <li data-max="3">Toalla corporal de baño</li>
+    <li data-max="2">Calderos</li>
+    <li data-max="2">Sartenes</li>
+    <li data-max="2">Ollas</li>
+    <li data-max="1">Olla de presión</li>
+    <li data-max="1">Microondas</li>
+    <li data-max="1">Plancha</li>
+    <li data-max="1">Tabla de planchar</li>
+    <li data-max="1">Envases contenedores herméticos</li>
+    <li data-max="2">Alfombras</li>
+    <li data-max="3">Cortinas</li>
+    <li data-max="1">Pilón</li>
+    <li data-max="1">Maja frito</li>
+    <li data-max="1">Exprimidor de limón</li>
+    <li data-max="1">Escoba</li>
+    <li data-max="1">Cubeta</li>
+    <li data-max="1">Suape</li>
+    <li data-max="1">Bowls</li>
+    <li data-max="2">Almohadas</li>
+    <li data-max="1">Lámpara</li>
+    <li data-max="1">Jamper</li>
+    <li data-max="1">Toallitas de cocina</li>
+    <li data-max="3">Jarra</li>
+    <li data-max="2">Cucharones</li>
+    <li data-max="1">Escurridor</li>
+    <li data-max="1">Estante de baño</li>
+    <li data-max="2">Sillas plásticas</li>
+    <li data-max="1">Organizador de platos</li>
+    <li data-max="2">Zacafones</li>
+    <li data-max="1">Espejo</li>
+    <li data-max="1">Abanico</li>
+    <li data-max="2">Botellones de agua</li>
+    <li data-max="1">Tanque de gas</li>
+  </ul>
+
+  <script>
+    // Seleccionar la lista
+    const giftList = document.getElementById('gift-list');
+
+    // Función para manejar la selección de regalos
+    giftList.addEventListener('click', (event) => {
+      const item = event.target;
+
+      // Verificar si se hizo clic en un elemento de la lista
+      if (item.tagName === 'LI') {
+        const maxSelections = parseInt(item.getAttribute('data-max')) || 1;
+        let currentSelections = parseInt(item.getAttribute('data-selected')) || 0;
+
+        // Si aún no se ha alcanzado el límite de selecciones
+        if (currentSelections < maxSelections) {
+          currentSelections++;
+          item.setAttribute('data-selected', currentSelections);
+          item.classList.add('selected');
+
+          // Si se alcanza el límite, deshabilitar el elemento
+          if (currentSelections === maxSelections) {
+            item.style.opacity = '0.5';
+            item.style.pointerEvents = 'none';
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
